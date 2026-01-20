@@ -1,6 +1,6 @@
 ---
 
-# Brandson Media Website
+# Brandson Media Phase II Website
 
 A modern, responsive, and **CMS-powered** website for **Brandson Media** — a leading printing, branding, and signage company based in Nairobi, Kenya.
 
