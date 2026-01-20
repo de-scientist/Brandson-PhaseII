@@ -4,8 +4,6 @@
 
 A modern, responsive, and **CMS-powered** website for **Brandson Media** — a leading printing, branding, and signage company based in Nairobi, Kenya.
 
-![Brandson Media Logo](/images/450402357-982850016870582-3987366302077048038-n.jpg)
-
 ---
 
 ## About Brandson Media
