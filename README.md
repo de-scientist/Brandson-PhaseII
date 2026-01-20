@@ -222,11 +222,3 @@ All rights reserved.
 
 ---
 
-If you want next:
-
-* 🔥 **Sanity schema examples**
-* 🧠 **CMS-driven homepage architecture**
-* 📈 **SEO + analytics integration guide**
-* 💸 **Quote-flow + lead funnel logic**
-
-Say the word.
