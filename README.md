@@ -1,7 +1,3 @@
-Here’s a **refined, production-ready README update** that cleanly introduces **Sanity CMS** while keeping everything you already have — no fluff, no breakage, just clarity and scale baked in.
-
-You can **replace your README.md** with the version below or selectively merge sections.
-
 ---
 
 # Brandson Media Website
