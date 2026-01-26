@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react'
 import HeroSection from "@/components/HeroSection"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -8,6 +9,7 @@ import { WhatsAppButton } from "@/components/whatsapp-button"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Link from "next/link"
+import { sanityClient } from '@/lib/sanity'
 import {
   Printer,
   Shirt,
@@ -96,6 +98,29 @@ const cataloguePreview = [
 ]
 
 export default function HomePage() {
+  const [servicesState, setServicesState] = useState<typeof services>(services)
+
+  useEffect(() => {
+    let mounted = true
+    ;(async () => {
+      try {
+        const query = `*[_type == "service" && featured == true][0..5]{title, excerpt}`
+        const res = await sanityClient.fetch(query)
+        if (!mounted || !res || res.length === 0) return
+        const mapped = res.map((s: any) => ({
+          icon: undefined,
+          title: s.title || 'Service',
+          description: s.excerpt || '',
+        }))
+        setServicesState(mapped)
+      } catch (err) {
+        console.warn('Failed to load featured services', err)
+      }
+    })()
+
+    return () => { mounted = false }
+  }, [])
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -117,7 +142,7 @@ export default function HomePage() {
             </p>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, idx) => (
+            {(servicesState || services).map((service, idx) => (
               <motion.div
                 key={service.title}
                 initial={{ opacity: 0, y: 20 }}
@@ -131,7 +156,11 @@ export default function HomePage() {
                       className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"
                       whileHover={{ scale: 1.1 }}
                     >
-                      <service.icon className="h-6 w-6 text-primary" />
+                      {service.icon ? (
+                        <service.icon className="h-6 w-6 text-primary" />
+                      ) : (
+                        <Printer className="h-6 w-6 text-primary" />
+                      )}
                     </motion.div>
                     <h3 className="text-xl font-semibold text-card-foreground mb-2">{service.title}</h3>
                     <p className="text-muted-foreground">{service.description}</p>
