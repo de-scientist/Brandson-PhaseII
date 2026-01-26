@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
-import { sanityClient } from "@/lib/sanity"
 
 const defaultHeroImages = [
   "/modern-printing-press-industrial.jpg",
@@ -12,18 +11,19 @@ const defaultHeroImages = [
   "/branding-signage.jpg",
 ]
 
-export default function HeroSection() {
+type Props = {
+  images?: string[]
+  title?: string
+  subtitle?: string
+}
+
+export default function HeroSection({ images, title, subtitle }: Props) {
   const [activeIndex, setActiveIndex] = useState<number>(0)
-  const [heroImages, setHeroImages] = useState<string[]>(defaultHeroImages)
-  const [title, setTitle] = useState<string>(
-    "Turning Ideas Into Powerful Visual Brands"
-  )
-  const [subtitle, setSubtitle] = useState<string>(
-    "Printing • Branding • Signage • Promotional Solutions"
-  )
+  const heroImages = images && images.length ? images : defaultHeroImages
+  const heading = title || "Turning Ideas Into Powerful Visual Brands"
+  const sub = subtitle || "Printing • Branding • Signage • Promotional Solutions"
 
   useEffect(() => {
-    // rotate index
     const interval = setInterval(() => {
       setActiveIndex((prev: number) => (prev + 1) % heroImages.length)
     }, 6000)
@@ -31,37 +31,8 @@ export default function HeroSection() {
     return () => clearInterval(interval)
   }, [heroImages.length])
 
-  useEffect(() => {
-    // Try to fetch featured service images and a headline from Sanity
-    let mounted = true
-    ;(async () => {
-      try {
-        const query = `*[_type == "service" && featured == true][0..4]{title, excerpt, "images": images[].asset->url}`
-        const res = await sanityClient.fetch(query)
-        if (!mounted || !res || res.length === 0) return
-
-        // Use images from first featured service and map titles
-        const imgs: string[] = []
-        res.forEach((s: any) => {
-          if (s.images && s.images.length) imgs.push(...s.images)
-        })
-        if (imgs.length) setHeroImages(imgs.slice(0, 5))
-        if (res[0].title) setTitle(res[0].title)
-        if (res[0].excerpt) setSubtitle(res[0].excerpt)
-      } catch (err) {
-        // keep defaults on error
-        console.warn("Hero fetch failed", err)
-      }
-    })()
-
-    return () => {
-      mounted = false
-    }
-  }, [])
-
   return (
     <section className="relative bg-dark-section-bg text-dark-section-fg overflow-hidden">
-      {/* Background carousel with fade animations */}
       <div className="absolute inset-0">
         <AnimatePresence>
           {heroImages.map((image, index) =>
@@ -80,7 +51,6 @@ export default function HeroSection() {
         </AnimatePresence>
       </div>
 
-      {/* Content */}
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
         <div className="max-w-3xl">
           <motion.h1
@@ -89,8 +59,7 @@ export default function HeroSection() {
             transition={{ duration: 0.6 }}
             className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-balance"
           >
-            {title.split(" ").slice(0, 3).join(" ")} <span className="text-primary">{title.split(" ").slice(3, 4).join(" ")}</span>{" "}
-            <span className="text-secondary">{title.split(" ").slice(4).join(" ")}</span>
+            {heading}
           </motion.h1>
 
           <motion.p
@@ -99,7 +68,7 @@ export default function HeroSection() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="mt-6 text-xl text-dark-section-fg/80 leading-relaxed"
           >
-            {subtitle}
+            {sub}
           </motion.p>
 
           <motion.p

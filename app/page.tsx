@@ -1,7 +1,3 @@
-"use client";
-
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react'
 import HeroSection from "@/components/HeroSection"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -97,85 +93,57 @@ const cataloguePreview = [
   { name: "UV Water Bottles", category: "UV Printing", image: "/uv-printed-branded-water-bottles.jpg" },
 ]
 
-export default function HomePage() {
-  const [servicesState, setServicesState] = useState<typeof services>(services)
+export default async function HomePage() {
+  // Fetch featured services and home doc server-side for SEO
+  const [featuredServices, homeDoc] = await Promise.all([
+    sanityClient.fetch(`*[_type == "service" && featured == true][0..5]{title, excerpt}`),
+    sanityClient.fetch(`*[_type == "home"][0] {title, subtitle, "images": images[].asset->url}`),
+  ])
 
-  useEffect(() => {
-    let mounted = true
-    ;(async () => {
-      try {
-        const query = `*[_type == "service" && featured == true][0..5]{title, excerpt}`
-        const res = await sanityClient.fetch(query)
-        if (!mounted || !res || res.length === 0) return
-        const mapped = res.map((s: any) => ({
-          icon: undefined,
-          title: s.title || 'Service',
-          description: s.excerpt || '',
-        }))
-        setServicesState(mapped)
-      } catch (err) {
-        console.warn('Failed to load featured services', err)
-      }
-    })()
+  const servicesState = (featuredServices && featuredServices.length)
+    ? featuredServices.map((s: any) => ({ icon: undefined, title: s.title || 'Service', description: s.excerpt || '' }))
+    : services
 
-    return () => { mounted = false }
-  }, [])
+  const heroProps = {
+    images: homeDoc?.images?.length ? homeDoc.images.slice(0,5) : undefined,
+    title: homeDoc?.title,
+    subtitle: homeDoc?.subtitle,
+  }
 
   return (
     <div className="min-h-screen">
       <Navbar />
-       <HeroSection />
+       <HeroSection {...heroProps} />
 
       {/* Services Overview */}
       <section className="py-20 bg-background">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center max-w-2xl mx-auto mb-16"
-          >
+          <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground">Our Services</h2>
             <p className="mt-4 text-lg text-muted-foreground">
               Comprehensive printing and branding solutions for your business
             </p>
-          </motion.div>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {(servicesState || services).map((service, idx) => (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                viewport={{ once: true }}
-              >
+            {(servicesState || services).map((service: any, idx: number) => (
+              <div key={service.title}>
                 <Card className="group hover:shadow-lg transition-shadow bg-card border-border h-full">
                   <CardContent className="p-6">
-                    <motion.div
-                      className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"
-                      whileHover={{ scale: 1.1 }}
-                    >
+                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                       {service.icon ? (
                         <service.icon className="h-6 w-6 text-primary" />
                       ) : (
                         <Printer className="h-6 w-6 text-primary" />
                       )}
-                    </motion.div>
+                    </div>
                     <h3 className="text-xl font-semibold text-card-foreground mb-2">{service.title}</h3>
                     <p className="text-muted-foreground">{service.description}</p>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             ))}
           </div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            viewport={{ once: true }}
-            className="mt-12 text-center"
-          >
+          <div className="mt-12 text-center">
             <Button
               size="lg"
               variant="outline"
@@ -186,43 +154,26 @@ export default function HomePage() {
                 View All Services <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Why Choose Us */}
       <section className="py-20 bg-muted">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center max-w-2xl mx-auto mb-16"
-          >
+          <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground">Why Choose Brandson Media</h2>
             <p className="mt-4 text-lg text-muted-foreground">Quality, reliability, and creativity in every project</p>
-          </motion.div>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, idx) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center"
-              >
-                <motion.div
-                  className="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mx-auto mb-4"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ duration: 0.3 }}
-                >
+              <div key={feature.title} className="text-center">
+                <div className="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mx-auto mb-4">
                   <feature.icon className="h-8 w-8 text-secondary" />
-                </motion.div>
+                </div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">{feature.title}</h3>
                 <p className="text-muted-foreground text-sm">{feature.description}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -231,51 +182,26 @@ export default function HomePage() {
       {/* Catalogue Preview */}
       <section className="py-20 bg-secondary text-secondary-foreground">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center max-w-2xl mx-auto mb-16"
-          >
+          <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold">Explore Our Catalogue</h2>
             <p className="mt-4 text-lg text-secondary-foreground/80">
               Browse our complete range of printing, branding, and promotional products
             </p>
-          </motion.div>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {cataloguePreview.map((item, idx) => (
-              <motion.div
-                key={item.name}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: idx * 0.1 }}
-                viewport={{ once: true }}
-                className="group relative overflow-hidden rounded-lg"
-              >
-                <motion.img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-40 object-cover"
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.3 }}
-                />
+              <div key={item.name} className="group relative overflow-hidden rounded-lg">
+                <img src={item.image} alt={item.name} className="w-full h-40 object-cover" />
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <div className="text-center text-white">
                     <p className="text-sm font-medium mb-1">{item.category}</p>
                     <h3 className="font-semibold">{item.name}</h3>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
+          <div className="text-center">
             <Button
               size="lg"
               className="bg-background text-foreground hover:bg-background/90"
@@ -285,47 +211,28 @@ export default function HomePage() {
                 View Full Catalogue <ShoppingCart className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Portfolio Preview */}
       <section className="py-20 bg-background">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center max-w-2xl mx-auto mb-16"
-          >
+          <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground">Our Work</h2>
             <p className="mt-4 text-lg text-muted-foreground">A glimpse of our recent projects</p>
-          </motion.div>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {portfolioItems.map((item, idx) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                viewport={{ once: true }}
-                className="group relative overflow-hidden rounded-lg"
-              >
-                <motion.img
-                  src={item.image || "/placeholder.svg"}
-                  alt={item.title}
-                  className="w-full h-64 object-cover"
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.3 }}
-                />
+              <div key={item.title} className="group relative overflow-hidden rounded-lg">
+                <img src={item.image || "/placeholder.svg"} alt={item.title} className="w-full h-64 object-cover" />
                 <div className="absolute inset-0 bg-dark-section-bg/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <div className="text-center text-dark-section-fg">
                     <p className="text-sm text-primary font-medium">{item.category}</p>
                     <h3 className="text-xl font-semibold mt-1">{item.title}</h3>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
           <div className="mt-12 text-center">
@@ -362,25 +269,20 @@ export default function HomePage() {
       {/* CTA Section */}
       <section className="py-20 bg-primary text-primary-foreground">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
+          <div>
             <h2 className="text-3xl sm:text-4xl font-bold text-balance">Ready to Transform Your Brand?</h2>
             <p className="mt-4 text-xl text-primary-foreground/90 max-w-2xl mx-auto">
               Let us help you create powerful visual solutions that make your business stand out.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <div>
                 <Button size="lg" className="bg-dark-section-fg text-dark-section-bg hover:bg-dark-section-fg/90" asChild>
                   <a href="https://wa.me/254701869821" target="_blank" rel="noopener noreferrer">
                     WhatsApp Us Now
                   </a>
                 </Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              </div>
+              <div>
                 <Button
                   size="lg"
                   variant="outline"
@@ -389,9 +291,9 @@ export default function HomePage() {
                 >
                   <Link href="/contact">Contact Us</Link>
                 </Button>
-              </motion.div>
+              </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
