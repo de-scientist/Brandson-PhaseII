@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Link from "next/link"
 import { sanityClient } from '@/lib/sanity'
+import type { ServiceDoc, HomeDoc } from '@/lib/types'
 import {
   Printer,
   Shirt,
@@ -94,14 +95,16 @@ const cataloguePreview = [
 ]
 
 export default async function HomePage() {
-  // Fetch featured services and home doc server-side for SEO
-  const [featuredServices, homeDoc] = await Promise.all([
-    sanityClient.fetch(`*[_type == "service" && featured == true][0..5]{title, excerpt}`),
-    sanityClient.fetch(`*[_type == "home"][0] {title, subtitle, "images": images[].asset->url}`),
-  ])
+  // Fetch featured services and home doc server-side for SEO (typed)
+  const featuredServices = await sanityClient.fetch<ServiceDoc[]>(
+    `*[_type == "service" && featured == true][0..5]{title, excerpt}`
+  )
+  const homeDoc = await sanityClient.fetch<HomeDoc>(
+    `*[_type == "home"][0] {title, subtitle, "images": images[].asset->url}`
+  )
 
   const servicesState = (featuredServices && featuredServices.length)
-    ? featuredServices.map((s: any) => ({ icon: undefined, title: s.title || 'Service', description: s.excerpt || '' }))
+    ? featuredServices.map((s) => ({ icon: undefined, title: s.title || 'Service', description: s.excerpt || '' }))
     : services
 
   const heroProps = {

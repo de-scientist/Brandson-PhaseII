@@ -19,21 +19,31 @@ type Props = {
 
 export default function HeroSection({ images, title, subtitle }: Props) {
   const [activeIndex, setActiveIndex] = useState<number>(0)
+  const [paused, setPaused] = useState(false)
   const heroImages = images && images.length ? images : defaultHeroImages
   const heading = title || "Turning Ideas Into Powerful Visual Brands"
   const sub = subtitle || "Printing • Branding • Signage • Promotional Solutions"
 
   useEffect(() => {
+    if (paused) return
     const interval = setInterval(() => {
       setActiveIndex((prev: number) => (prev + 1) % heroImages.length)
-    }, 6000)
+    }, 5000)
 
     return () => clearInterval(interval)
-  }, [heroImages.length])
+  }, [heroImages.length, paused])
+
+  function prev() {
+    setActiveIndex((p) => (p - 1 + heroImages.length) % heroImages.length)
+  }
+
+  function next() {
+    setActiveIndex((p) => (p + 1) % heroImages.length)
+  }
 
   return (
     <section className="relative bg-dark-section-bg text-dark-section-fg overflow-hidden">
-      <div className="absolute inset-0">
+      <div className="absolute inset-0" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
         <AnimatePresence>
           {heroImages.map((image, index) =>
             index === activeIndex ? (
@@ -49,6 +59,13 @@ export default function HeroSection({ images, title, subtitle }: Props) {
             ) : null
           )}
         </AnimatePresence>
+        {/* controls */}
+        <div className="absolute left-4 top-1/2 -translate-y-1/2 z-20">
+          <button aria-label="Previous" onClick={prev} className="bg-black/40 text-white p-2 rounded-full">‹</button>
+        </div>
+        <div className="absolute right-4 top-1/2 -translate-y-1/2 z-20">
+          <button aria-label="Next" onClick={next} className="bg-black/40 text-white p-2 rounded-full">›</button>
+        </div>
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
@@ -102,6 +119,17 @@ export default function HeroSection({ images, title, subtitle }: Props) {
               <Link href="/services">View Our Services</Link>
             </Button>
           </motion.div>
+          {/* indicators */}
+          <div className="mt-6 flex items-center gap-2">
+            {heroImages.map((_, i) => (
+              <button
+                key={i}
+                aria-label={`Go to slide ${i + 1}`}
+                onClick={() => setActiveIndex(i)}
+                className={`w-3 h-3 rounded-full ${i === activeIndex ? 'bg-primary' : 'bg-white/40'}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
