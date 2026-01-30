@@ -315,7 +315,7 @@ export async function resetPassword(token: string, newPassword: string): Promise
 /**
  * Get middleware auth function
  */
-export function getAuthUser(req: Request): User | null {
+export async function getAuthUser(req: Request): Promise<User | null> {
   try {
     const authHeader = req.headers.get('authorization')
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -327,7 +327,7 @@ export function getAuthUser(req: Request): User | null {
     
     if (!decoded) return null
 
-    return getUserById(decoded.userId)
+    return await getUserById(decoded.userId)
   } catch (error) {
     return null
   }
