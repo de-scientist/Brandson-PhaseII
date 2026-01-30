@@ -15,7 +15,7 @@ export async function GET(req: Request) {
     // Get authenticated user
     const user = await getAuthUser(req)
     
-    if (!user || (user.role !== 'admin' && user.role !== 'editor')) {
+    if (!user || (user.role !== 'admin' && user.role !== 'staff')) {
       return NextResponse.json({
         success: false,
         error: 'Unauthorized',
@@ -128,7 +128,7 @@ export async function POST(req: Request) {
     // Get authenticated user
     const user = await getAuthUser(req)
     
-    if (!user || (user.role !== 'admin' && user.role !== 'editor')) {
+    if (!user || (user.role !== 'admin' && user.role !== 'staff')) {
       return NextResponse.json({
         success: false,
         error: 'Unauthorized',
