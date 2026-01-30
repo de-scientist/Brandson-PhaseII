@@ -31,7 +31,9 @@ import {
   Palette,
   Clock,
   CheckCircle,
-  AlertTriangle
+  AlertTriangle,
+  Zap,
+  UserPlus
 } from "lucide-react"
 import { getAuthUser } from "@/lib/auth"
 
