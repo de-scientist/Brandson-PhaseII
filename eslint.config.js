@@ -1,4 +1,6 @@
 import js from '@eslint/js'
+import typescript from '@typescript-eslint/eslint-plugin'
+import tsParser from '@typescript-eslint/parser'
 
 export default [
   js.configs.recommended,
@@ -84,7 +86,7 @@ export default [
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
-      parser: '@typescript-eslint/parser',
+      parser: tsParser,
       parserOptions: {
         ecmaFeatures: {
           jsx: true,
@@ -143,7 +145,9 @@ export default [
         JSX: 'readonly',
       },
     },
-    plugins: ['@typescript-eslint'],
+    plugins: {
+      '@typescript-eslint': typescript,
+    },
     rules: {
       'no-unused-vars': 'off',
       'no-console': 'off',
