@@ -1,6 +1,4 @@
-import { HeroSection, EnhancedHeader } from "@/components/enhanced-header"
-import { EnhancedFooter } from "@/components/enhanced-footer"
-import { WhatsAppButton } from "@/components/whatsapp-button"
+import { HeroSection } from "@/components/enhanced-header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Link from "next/link"
@@ -99,7 +97,7 @@ export default async function HomePage() {
     `*[_type == "service" && featured == true][0..5]{title, excerpt}`
   )
   const homeDoc = await sanityClient.fetch<HomeDoc>(
-    `*[_type == "home"][0] {title, subtitle, "images": images?.asset->url}`
+    `*[_type == "home"][0] {title, subtitle, "images": images[].asset->url}`
   )
 
   const servicesState = (featuredServices && featuredServices.length)
@@ -114,7 +112,6 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen">
-      <EnhancedHeader />
       <HeroSection />
 
       {/* Services Overview */}
@@ -299,8 +296,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <EnhancedFooter />
-      <WhatsAppButton />
     </div>
   )
 }
