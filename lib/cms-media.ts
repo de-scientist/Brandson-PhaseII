@@ -86,6 +86,7 @@ export interface MediaVersion {
   dimensions: {
     width: number
     height: number
+    aspectRatio: number
   }
   size: number
   format: string
@@ -671,7 +672,7 @@ async function generateMediaVersions(asset: any, configs: MediaVersionConfig[], 
       dimensions: {
         width: config.width || 0,
         height: config.height || 0,
-        aspectRatio: 1,
+        aspectRatio: config.width && config.height ? config.width / config.height : 1,
       },
       size: asset.size || 0,
       format: config.format || 'jpg',
