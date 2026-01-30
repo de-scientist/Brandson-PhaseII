@@ -1,8 +1,8 @@
-import { redirect } from 'next/navigation'
+import { getAuthUser } from "@/lib/auth"
 import { EnhancedDashboard } from "@/components/enhanced-dashboard"
-import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
-async function DashboardPage() {
+export default async function DashboardPage() {
   // Get authenticated user
   const user = await getAuthUser({} as Request)
   
@@ -10,44 +10,8 @@ async function DashboardPage() {
     redirect('/login')
   }
 
-  // Get customer data
-  const orders = await getCustomerOrders(user.email)
-  const invoices = await getInvoices({ customerId: user.email })
-  const orderStats = await getOrderStats({ customerEmail: user.email })
-
-  // Calculate recent activity
-  const recentOrders = orders.slice(0, 5)
-  const pendingOrders = orders.filter(o => o.status === 'pending' || o.status === 'confirmed')
-  const completedOrders = orders.filter(o => o.status === 'delivered')
-  const unpaidInvoices = invoices.filter(i => i.status === 'sent' || i.status === 'overdue')
-
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Welcome back, {user.name}!</h1>
-        <p className="text-muted-foreground">
-          Manage your orders, invoices, and account settings from your dashboard.
-        </p>
-      </div>
-
-      {/* Stats Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
-            <Package className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{orderStats.total}</div>
-            <p className="text-xs text-muted-foreground">
-              {pendingOrders.length} pending
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Completed Orders</CardTitle>
+  return <EnhancedDashboard />
+}
             <CheckCircle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
