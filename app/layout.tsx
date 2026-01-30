@@ -4,6 +4,9 @@ import { Inter, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ThemeProvider } from "@/components/theme-provider"
+import { MainNavigation } from "@/components/main-navigation"
+import { EnhancedFooter } from "@/components/enhanced-footer"
+import { WhatsAppButton } from "@/components/whatsapp-button"
 import "./globals.css"
 
 // Fonts (performance + SEO via Core Web Vitals)
@@ -91,7 +94,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${geistMono.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {children}
+          <MainNavigation />
+          <main className="flex-1">
+            {children}
+          </main>
+          <EnhancedFooter />
+          <WhatsAppButton />
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />
