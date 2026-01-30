@@ -104,11 +104,11 @@ export default async function HomePage() {
     ? featuredServices.map((s) => ({ icon: undefined, title: s.title || 'Service', description: s.excerpt || '' }))
     : services
 
-  const heroProps = {
-    images: homeDoc?.images?.length ? homeDoc.images.slice(0,5) : undefined,
-    title: homeDoc?.title,
-    subtitle: homeDoc?.subtitle,
-  }
+  // const heroProps = {
+  //   images: homeDoc?.images?.length ? homeDoc.images.slice(0,5) : undefined,
+  //   title: homeDoc?.title,
+  //   subtitle: homeDoc?.subtitle,
+  // }
 
   return (
     <div className="min-h-screen">
