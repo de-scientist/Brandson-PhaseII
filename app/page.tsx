@@ -1,4 +1,4 @@
-import { HeroSection } from "@/components/enhanced-header"
+import { HeroSection, EnhancedHeader } from "@/components/enhanced-header"
 import { EnhancedFooter } from "@/components/enhanced-footer"
 import { WhatsAppButton } from "@/components/whatsapp-button"
 import { Button } from "@/components/ui/button"
@@ -6,20 +6,6 @@ import { Card, CardContent } from "@/components/ui/card"
 import Link from "next/link"
 import { sanityClient } from '@/lib/sanity'
 import type { ServiceDoc, HomeDoc } from '@/lib/types'
-import {
-  Printer,
-  Shirt,
-  Sparkles,
-  Building2,
-  Scissors,
-  Layers,
-  CheckCircle,
-  Clock,
-  Award,
-  DollarSign,
-  ArrowRight,
-  ShoppingCart,
-} from "lucide-react"
 import {
   Printer,
   Shirt,
@@ -107,7 +93,7 @@ const cataloguePreview = [
   { name: "UV Water Bottles", category: "UV Printing", image: "/uv-printed-branded-water-bottles.jpg" },
 ]
 
-export default function HomePage() {
+export default async function HomePage() {
   // Fetch featured services and home doc server-side for SEO (typed)
   const featuredServices = await sanityClient.fetch<ServiceDoc[]>(
     `*[_type == "service" && featured == true][0..5]{title, excerpt}`
@@ -129,7 +115,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       <EnhancedHeader />
-      <HeroSection {...heroProps} />
+      <HeroSection />
 
       {/* Services Overview */}
       <section className="py-20 bg-background">
@@ -313,7 +299,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Footer />
+      <EnhancedFooter />
       <WhatsAppButton />
     </div>
   )
