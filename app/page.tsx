@@ -1,6 +1,5 @@
-import HeroSection from "@/components/HeroSection"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
+import { HeroSection } from "@/components/enhanced-header"
+import { EnhancedFooter } from "@/components/enhanced-footer"
 import { WhatsAppButton } from "@/components/whatsapp-button"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -21,35 +20,49 @@ import {
   ArrowRight,
   ShoppingCart,
 } from "lucide-react"
+import {
+  Printer,
+  Shirt,
+  Sparkles,
+  Building2,
+  Scissors,
+  Layers,
+  CheckCircle,
+  Clock,
+  Award,
+  DollarSign,
+  ArrowRight,
+  ShoppingCart,
+} from "lucide-react"
 
 const services = [
   {
-    icon: Printer,
+    icon: <Printer className="h-6 w-6" />,
     title: "Printing & Stickers",
     description: "Banners, stickers, vehicle branding, and all your printing needs.",
   },
   {
-    icon: Shirt,
+    icon: <Shirt className="h-6 w-6" />,
     title: "Branding Services",
     description: "T-shirts, uniforms, caps, and corporate apparel branding.",
   },
   {
-    icon: Sparkles,
+    icon: <Sparkles className="h-6 w-6" />,
     title: "UV Printing",
     description: "Custom promotional items, gifts, and branded merchandise.",
   },
   {
-    icon: Building2,
+    icon: <Building2 className="h-6 w-6" />,
     title: "Signage & 3D Signs",
     description: "Indoor and outdoor signage for businesses and buildings.",
   },
   {
-    icon: Scissors,
+    icon: <Scissors className="h-6 w-6" />,
     title: "Laser Cutting",
     description: "Acrylic, wood cutting, engraving, and custom displays.",
   },
   {
-    icon: Layers,
+    icon: <Layers className="h-6 w-6" />,
     title: "Paper Printing",
     description: "Business cards, brochures, company profiles, and more.",
   },
