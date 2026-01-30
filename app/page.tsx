@@ -107,13 +107,13 @@ const cataloguePreview = [
   { name: "UV Water Bottles", category: "UV Printing", image: "/uv-printed-branded-water-bottles.jpg" },
 ]
 
-export default async function HomePage() {
+export default function HomePage() {
   // Fetch featured services and home doc server-side for SEO (typed)
   const featuredServices = await sanityClient.fetch<ServiceDoc[]>(
     `*[_type == "service" && featured == true][0..5]{title, excerpt}`
   )
   const homeDoc = await sanityClient.fetch<HomeDoc>(
-    `*[_type == "home"][0] {title, subtitle, "images": images[].asset->url}`
+    `*[_type == "home"][0] {title, subtitle, "images": images?.asset->url}`
   )
 
   const servicesState = (featuredServices && featuredServices.length)
@@ -128,8 +128,8 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen">
-      <Navbar />
-       <HeroSection {...heroProps} />
+      <EnhancedHeader />
+      <HeroSection {...heroProps} />
 
       {/* Services Overview */}
       <section className="py-20 bg-background">
