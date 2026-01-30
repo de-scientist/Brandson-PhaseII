@@ -2,11 +2,11 @@ import crypto from 'crypto'
 
 // M-Pesa Daraja API Configuration
 const MPESA_CONFIG = {
-  consumerKey: process.env.MPESA_CONSUMER_KEY!,
-  consumerSecret: process.env.MPESA_CONSUMER_SECRET!,
-  passKey: process.env.MPESA_PASS_KEY!,
-  shortcode: process.env.MPESA_SHORTCODE!,
-  callbackUrl: process.env.MPESA_CALLBACK_URL!,
+  consumerKey: process.env.MPESA_CONSUMER_KEY || 'demo_consumer_key',
+  consumerSecret: process.env.MPESA_CONSUMER_SECRET || 'demo_consumer_secret',
+  passKey: process.env.MPESA_PASS_KEY || 'demo_pass_key',
+  shortcode: process.env.MPESA_SHORTCODE || '174379',
+  callbackUrl: process.env.MPESA_CALLBACK_URL || 'http://localhost:3000/api/payments/mpesa/callback',
   environment: process.env.NODE_ENV === 'production' ? 'production' : 'sandbox',
 }
 
