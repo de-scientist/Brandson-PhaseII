@@ -1,20 +1,5 @@
 import { redirect } from 'next/navigation'
-import { getAuthUser } from '@/lib/auth'
-import { getCustomerOrders, getOrderStats } from '@/lib/orders'
-import { getInvoices } from '@/lib/invoices'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { 
-  Package, 
-  FileText, 
-  CreditCard, 
-  TrendingUp,
-  Clock,
-  CheckCircle,
-  AlertCircle,
-  Calendar,
-  Download
-} from 'lucide-react'
+import { EnhancedDashboard } from "@/components/enhanced-dashboard"
 import Link from 'next/link'
 
 async function DashboardPage() {
