@@ -41,7 +41,7 @@ export async function GET(req: Request, { params }: RouteParams) {
     } else if (format === 'pdf') {
       // Return PDF invoice (placeholder implementation)
       const pdf = await generateInvoicePDF(invoice)
-      return new NextResponse(pdf, {
+      return new NextResponse(pdf.toString(), {
         headers: {
           'Content-Type': 'application/pdf',
           'Content-Disposition': `attachment; filename="invoice-${invoice.invoiceNumber}.pdf"`,
