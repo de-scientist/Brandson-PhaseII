@@ -63,6 +63,7 @@ const services = [
     popular: true
   },
   {
+    id: "branding-services",
     icon: Shirt,
     title: "Branding Services",
     description: "T-shirts, uniforms, caps, and corporate apparel branding.",
@@ -71,6 +72,7 @@ const services = [
     popular: false
   },
   {
+    id: "uv-printing",
     icon: Sparkles,
     title: "UV Printing",
     description: "Custom promotional items, gifts, and branded merchandise.",
@@ -80,6 +82,7 @@ const services = [
     isNew: true
   },
   {
+    id: "signage-3d-signs",
     icon: Building2,
     title: "Signage & 3D Signs",
     description: "Indoor and outdoor signage for businesses and buildings.",
@@ -88,6 +91,7 @@ const services = [
     popular: false
   },
   {
+    id: "laser-cutting",
     icon: Scissors,
     title: "Laser Cutting",
     description: "Acrylic, wood cutting, engraving, and custom displays.",
@@ -96,6 +100,7 @@ const services = [
     popular: false
   },
   {
+    id: "paper-printing",
     icon: Layers,
     title: "Paper Printing",
     description: "Business cards, brochures, company profiles, and more.",
@@ -185,9 +190,9 @@ export default function HomePage() {
 
   const handleAddToCart = (service: any) => {
     addToCart({
-      id: service.id || service.title.toLowerCase().replace(/\s+/g, '-'),
+      id: service.id,
       service: service.title,
-      category: service.title.toLowerCase().replace(/\s+/g, '-'),
+      category: service.id,
       description: service.description,
       quantity: 1,
       unitPrice: parseInt(service.startingFrom.replace('KES ', '').replace(',', '')),
@@ -317,11 +322,11 @@ export default function HomePage() {
                         <Button 
                           size="sm" 
                           onClick={() => handleAddToCart(service)}
-                          disabled={isInCart(service.id || service.title.toLowerCase().replace(/\s+/g, '-'))}
+                          disabled={isInCart(service.id)}
                         >
                           <ShoppingCart className="mr-1 h-3 w-3" />
-                          {isInCart(service.id || service.title.toLowerCase().replace(/\s+/g, '-')) 
-                            ? `In Cart (${getItemQuantity(service.id || service.title.toLowerCase().replace(/\s+/g, '-'))})`
+                          {isInCart(service.id) 
+                            ? `In Cart (${getItemQuantity(service.id)})`
                             : 'Add to Cart'
                           }
                         </Button>
