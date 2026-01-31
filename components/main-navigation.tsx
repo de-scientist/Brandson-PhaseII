@@ -221,9 +221,9 @@ export function MainNavigation() {
       children: [
         {
           title: "Get Quote",
-          href: "/contact",
+          href: "/quote",
           icon: <FileText className="h-4 w-4" />,
-          description: "Request a quote"
+          description: "Build custom quote"
         },
         {
           title: "Upload Files",
