@@ -134,6 +134,8 @@ const features = [
 ]
 
 
+"use client"
+
 export default function HomePage() {
   const { addToCart, isInCart, getItemQuantity } = useCart()
 

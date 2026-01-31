@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { WhatsAppButton } from "@/components/whatsapp-button"
+import { CartButton } from "@/components/cart-button"
 import { 
   Menu, 
   X, 
@@ -491,6 +492,9 @@ export function MainNavigation() {
           )
         })}
       </nav>
+
+      {/* Cart Button */}
+      <CartButton />
 
       {/* Mobile Navigation */}
       <div className="lg:hidden">
