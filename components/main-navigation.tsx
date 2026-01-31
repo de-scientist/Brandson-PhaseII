@@ -5,7 +5,6 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { NavigationMenu } from "@/components/navigation-menu"
 import { WhatsAppButton } from "@/components/whatsapp-button"
 import { 
   Menu, 

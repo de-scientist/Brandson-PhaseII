@@ -94,11 +94,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${geistMono.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <MainNavigation />
-          <main className="flex-1">
-            {children}
-          </main>
-          <EnhancedFooter />
+          <div className="min-h-screen flex flex-col">
+            <MainNavigation />
+            <main className="flex-1">
+              {children}
+            </main>
+            <EnhancedFooter />
+          </div>
           <WhatsAppButton />
         </ThemeProvider>
         <Analytics />
