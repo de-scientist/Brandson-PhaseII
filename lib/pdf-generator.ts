@@ -200,7 +200,8 @@ export async function generateQuotePDF(quoteData: QuoteData): Promise<Blob> {
   const footerHeight = doc.internal.pageSize.height
   doc.setFontSize(8)
   doc.setTextColor(150, 150, 150)
-  doc.text('Thank you for choosing Brandson Media!', 20, footerHeight - 30)
+  doc.text('Thank you for choosing Brandson Media!', 20, footerHeight - 40)
+  doc.text('© 2026 Brandson Media. All rights reserved.', 20, footerHeight - 30)
   doc.text('This is a computer-generated document and does not require a signature.', 20, footerHeight - 20)
   
   return new Blob([doc.output('blob')], { type: 'application/pdf' })
