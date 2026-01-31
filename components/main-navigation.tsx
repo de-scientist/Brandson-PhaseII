@@ -117,8 +117,10 @@ export function MainNavigation() {
 
   const handleLogout = async () => {
     try {
-      // Clear localStorage
-      localStorage.removeItem('user')
+      // Clear localStorage (client-side only)
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('user')
+      }
       // Clear any stored auth data
       setUser(null)
       // Redirect to home
