@@ -28,7 +28,7 @@ import {
 } from "lucide-react"
 
 export function EnhancedFooter() {
-  const currentYear = new Date().getFullYear()
+  const currentYear = 2026
 
   const quickLinks = [
     { title: "Services", href: "/services", icon: <Package className="h-4 w-4" /> },

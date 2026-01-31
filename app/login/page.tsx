@@ -277,7 +277,7 @@ export default function LoginPage() {
       <div className="absolute bottom-0 left-0 right-0 p-6">
         <div className="max-w-7xl mx-auto flex items-center justify-between text-sm text-gray-600">
           <div className="flex items-center gap-4">
-            <span>© 2024 Brandson Media</span>
+            <span>© 2026 Brandson Media</span>
             <Separator orientation="vertical" className="h-4" />
             <span>Nairobi, Kenya</span>
           </div>
