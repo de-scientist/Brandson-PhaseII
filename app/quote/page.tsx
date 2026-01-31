@@ -339,37 +339,25 @@ export default function QuoteBuilder() {
   const generatePDF = async () => {
     setIsGeneratingPDF(true)
     
-    // Simulate PDF generation
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    // Create PDF content
-    const pdfContent = {
-      company: {
-        name: 'Brandson Media',
-        logo: '/images/brandson-logo.png',
-        address: 'Nairobi, Kenya',
-        phone: '+254 701 869 821',
-        email: 'brandsonmedia@gmail.com',
-        website: 'www.brandsonmedia.co.ke'
-      },
-      quote: quoteData,
-      quoteNumber: `QT-${Date.now()}`,
-      date: new Date().toLocaleDateString(),
-      validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()
+    try {
+      const { generateQuotePDF } = await import('@/lib/pdf-generator')
+      const pdfBlob = await generateQuotePDF(quoteData)
+      
+      // Download the PDF
+      const url = URL.createObjectURL(pdfBlob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `Brandson-Media-Quote-${Date.now()}.pdf`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('Error generating PDF:', error)
+      alert('Error generating PDF. Please try again.')
+    } finally {
+      setIsGeneratingPDF(false)
     }
-
-    // Download PDF (simulated)
-    const blob = new Blob([JSON.stringify(pdfContent, null, 2)], { type: 'application/pdf' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `Brandson-Media-Quote-${Date.now()}.pdf`
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
-
-    setIsGeneratingPDF(false)
   }
 
   const totalSteps = 4
