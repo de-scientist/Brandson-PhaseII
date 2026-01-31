@@ -21,32 +21,32 @@ import {
 
 const services = [
   {
-    icon: <Printer className="h-6 w-6" />,
+    icon: Printer,
     title: "Printing & Stickers",
     description: "Banners, stickers, vehicle branding, and all your printing needs.",
   },
   {
-    icon: <Shirt className="h-6 w-6" />,
+    icon: Shirt,
     title: "Branding Services",
     description: "T-shirts, uniforms, caps, and corporate apparel branding.",
   },
   {
-    icon: <Sparkles className="h-6 w-6" />,
+    icon: Sparkles,
     title: "UV Printing",
     description: "Custom promotional items, gifts, and branded merchandise.",
   },
   {
-    icon: <Building2 className="h-6 w-6" />,
+    icon: Building2,
     title: "Signage & 3D Signs",
     description: "Indoor and outdoor signage for businesses and buildings.",
   },
   {
-    icon: <Scissors className="h-6 w-6" />,
+    icon: Scissors,
     title: "Laser Cutting",
     description: "Acrylic, wood cutting, engraving, and custom displays.",
   },
   {
-    icon: <Layers className="h-6 w-6" />,
+    icon: Layers,
     title: "Paper Printing",
     description: "Business cards, brochures, company profiles, and more.",
   },
