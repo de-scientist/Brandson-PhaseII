@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
+import { useCart } from "@/contexts/cart-context"
 import {
   Package,
   Users,
@@ -53,6 +54,7 @@ import {
 
 const services = [
   {
+    id: "printing-stickers",
     icon: Printer,
     title: "Printing & Stickers",
     description: "Banners, stickers, vehicle branding, and all your printing needs.",
@@ -179,6 +181,22 @@ const portfolioItems = [
 ]
 
 export default function HomePage() {
+  const { addToCart, isInCart, getItemQuantity } = useCart()
+
+  const handleAddToCart = (service: any) => {
+    addToCart({
+      id: service.id || service.title.toLowerCase().replace(/\s+/g, '-'),
+      service: service.title,
+      category: service.title.toLowerCase().replace(/\s+/g, '-'),
+      description: service.description,
+      quantity: 1,
+      unitPrice: parseInt(service.startingFrom.replace('KES ', '').replace(',', '')),
+      specifications: {},
+      timeline: 'Standard (3-5 days)',
+      image: service.image
+    })
+  }
+
   return (
     <div className="min-h-screen">
       {/* Dynamic Hero Section */}
@@ -290,13 +308,22 @@ export default function HomePage() {
                         <p className="text-lg font-bold text-primary">{service.startingFrom}</p>
                       </div>
                       <div className="flex gap-2">
-                        <Button size="sm" variant="outline">
-                          <Eye className="mr-1 h-3 w-3" />
-                          View
+                        <Button size="sm" variant="outline" asChild>
+                          <Link href={`/services/${service.title.toLowerCase().replace(/\s+/g, '-')}`}>
+                            <Eye className="mr-1 h-3 w-3" />
+                            View
+                          </Link>
                         </Button>
-                        <Button size="sm">
+                        <Button 
+                          size="sm" 
+                          onClick={() => handleAddToCart(service)}
+                          disabled={isInCart(service.id || service.title.toLowerCase().replace(/\s+/g, '-'))}
+                        >
                           <ShoppingCart className="mr-1 h-3 w-3" />
-                          Add to Cart
+                          {isInCart(service.id || service.title.toLowerCase().replace(/\s+/g, '-')) 
+                            ? `In Cart (${getItemQuantity(service.id || service.title.toLowerCase().replace(/\s+/g, '-'))})`
+                            : 'Add to Cart'
+                          }
                         </Button>
                       </div>
                     </div>
