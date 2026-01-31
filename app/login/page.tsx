@@ -79,29 +79,15 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      {/* Header */}
+      {/* Header - Hidden on login page for cleaner design */}
       <div className="absolute top-0 left-0 right-0 p-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="max-w-7xl mx-auto flex items-center justify-center">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
               <Package className="h-4 w-4 text-white" />
             </div>
             <span className="font-bold text-xl">Brandson Media</span>
           </Link>
-          
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" asChild>
-              <Link href="/quote">
-                Get Quote
-              </Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link href="https://wa.me/254701869821" target="_blank">
-                <MessageCircle className="mr-2 h-4 w-4" />
-                WhatsApp
-              </Link>
-            </Button>
-          </div>
         </div>
       </div>
 
