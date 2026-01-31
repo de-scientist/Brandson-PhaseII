@@ -37,20 +37,31 @@ export async function generateQuotePDF(quoteData: QuoteData): Promise<Blob> {
   // Set font to support special characters
   doc.setFont('helvetica')
   
-  // Header
-  doc.setFontSize(24)
-  doc.setTextColor(0, 102, 204) // Brandson blue
-  doc.text('Brandson Media', 20, 30)
+  // Page dimensions
+  const pageWidth = doc.internal.pageSize.getWidth()
+  const pageHeight = doc.internal.pageSize.getHeight()
+  const margin = 20
+  const contentWidth = pageWidth - (margin * 2)
   
-  doc.setFontSize(12)
-  doc.setTextColor(100, 100, 100)
-  doc.text('Printing & Branding Solutions', 20, 40)
+  // Header with professional styling
+  doc.setFillColor(59, 130, 246) // Primary blue
+  doc.rect(0, 0, pageWidth, 80, 'F')
   
-  // Contact info
+  // Company name
+  doc.setFontSize(28)
+  doc.setTextColor(255, 255, 255)
+  doc.text('Brandson Media', margin, 35)
+  
+  // Tagline
+  doc.setFontSize(14)
+  doc.setTextColor(219, 234, 254) // Light blue
+  doc.text('Professional Printing & Branding Solutions', margin, 50)
+  
+  // Contact info in header
   doc.setFontSize(10)
-  doc.setTextColor(80, 80, 80)
-  doc.text('Nairobi, Kenya | +254 701 869 821 | brandsonmedia@gmail.com', 20, 50)
-  doc.text('www.brandsonmedia.co.ke', 20, 57)
+  doc.setTextColor(255, 255, 255)
+  doc.text('Nairobi, Kenya | +254 701 869 821 | brandsonmedia@gmail.com', margin, 65)
+  doc.text('www.brandsonmedia.co.ke', margin, 75)
   
   // Quote details
   doc.setFontSize(16)
@@ -186,11 +197,11 @@ export async function generateQuotePDF(quoteData: QuoteData): Promise<Blob> {
   }
   
   // Footer
-  const pageHeight = doc.internal.pageSize.height
+  const footerHeight = doc.internal.pageSize.height
   doc.setFontSize(8)
   doc.setTextColor(150, 150, 150)
-  doc.text('Thank you for choosing Brandson Media!', 20, pageHeight - 30)
-  doc.text('This is a computer-generated document and does not require a signature.', 20, pageHeight - 20)
+  doc.text('Thank you for choosing Brandson Media!', 20, footerHeight - 30)
+  doc.text('This is a computer-generated document and does not require a signature.', 20, footerHeight - 20)
   
   return new Blob([doc.output('blob')], { type: 'application/pdf' })
 }
