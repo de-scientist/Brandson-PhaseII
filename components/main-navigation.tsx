@@ -92,6 +92,16 @@ export function MainNavigation() {
 
   const checkAuth = async () => {
     try {
+      // Check localStorage first for demo purposes (client-side only)
+      if (typeof window !== 'undefined') {
+        const storedUser = localStorage.getItem('user')
+        if (storedUser) {
+          setUser(JSON.parse(storedUser))
+          return
+        }
+      }
+      
+      // Fallback to API call
       const response = await fetch('/api/auth/me')
       if (response.ok) {
         const data = await response.json()
@@ -100,12 +110,15 @@ export function MainNavigation() {
         }
       }
     } catch (error) {
-      // User not authenticated
+      // User not authenticated, that's okay
+      console.log('User not authenticated')
     }
   }
 
   const handleLogout = async () => {
     try {
+      // Clear localStorage
+      localStorage.removeItem('user')
       // Clear any stored auth data
       setUser(null)
       // Redirect to home
