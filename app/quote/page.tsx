@@ -255,7 +255,7 @@ export default function QuoteBuilder() {
         '5mm': 100,
         '10mm': 300,
         'Simple': 0,
-        'Medium': 100,
+        'Medium_Complex': 100,
         'Complex': 300,
         'Intricate': 500
       }
@@ -487,9 +487,9 @@ export default function QuoteBuilder() {
                               <SelectValue placeholder="Select quantity" />
                             </SelectTrigger>
                             <SelectContent>
-                              {services.find(s => s.id === selectedService)?.options.quantity.map(q => (
+                              {services.find(s => s.id === selectedService)?.options.quantity?.map(q => (
                                 <SelectItem key={q} value={q.toString()}>{q}</SelectItem>
-                              ))}
+                              )) || []}
                             </SelectContent>
                           </Select>
                         </div>
