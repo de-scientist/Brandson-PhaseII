@@ -133,57 +133,6 @@ const features = [
   }
 ]
 
-const portfolioItems = [
-  { 
-    title: "Corporate Branding", 
-    category: "Branding", 
-    image: "/branded-corporate-t-shirts-uniform.jpg",
-    price: "KES 15,000",
-    rating: 4.8,
-    reviews: 24
-  },
-  { 
-    title: "Event Banners", 
-    category: "Printing", 
-    image: "/professional-event-banners-displays.jpg",
-    price: "KES 8,000",
-    rating: 4.9,
-    reviews: 18
-  },
-  { 
-    title: "Vehicle Wrapping", 
-    category: "Branding", 
-    image: "/branded-vehicle-car-wrapping.jpg",
-    price: "KES 25,000",
-    rating: 4.7,
-    reviews: 31
-  },
-  { 
-    title: "3D Signage", 
-    category: "Signage", 
-    image: "/3d-company-signage-letters.jpg",
-    price: "KES 12,000",
-    rating: 5.0,
-    reviews: 12
-  },
-  { 
-    title: "UV Printed Items", 
-    category: "UV Printing", 
-    image: "/uv-printed-promotional-items-bottles.jpg",
-    price: "KES 3,500",
-    rating: 4.6,
-    reviews: 8,
-    isNew: true
-  },
-  { 
-    title: "Acrylic Displays", 
-    category: "Laser Cutting", 
-    image: "/acrylic-menu-holders-displays.jpg",
-    price: "KES 5,000",
-    rating: 4.8,
-    reviews: 15
-  }
-]
 
 export default function HomePage() {
   const { addToCart, isInCart, getItemQuantity } = useCart()
@@ -368,87 +317,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Portfolio Preview */}
-      <section className="py-20 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-4">Our Recent Work</h2>
-            <p className="text-xl text-muted-foreground mb-8">A glimpse of our recent projects</p>
-            <div className="flex justify-center gap-4">
-              <Button variant="outline" size="sm">
-                <Filter className="mr-2 h-4 w-4" />
-                All Categories
-              </Button>
-              <Button variant="ghost" size="sm">
-                <TrendingUp className="mr-2 h-4 w-4" />
-                Most Popular
-              </Button>
-              <Button variant="ghost" size="sm">
-                <Star className="mr-2 h-4 w-4" />
-                Top Rated
-              </Button>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {portfolioItems.map((item, index) => (
-              <Card key={index} className="group overflow-hidden hover:shadow-lg transition-all duration-300">
-                <div className="relative aspect-video overflow-hidden">
-                  <img 
-                    src={item.image} 
-                    alt={item.title} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
-                  />
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <div className="text-center text-white">
-                      <p className="text-sm font-medium mb-1">{item.category}</p>
-                      <h3 className="text-lg font-semibold">{item.title}</h3>
-                    </div>
-                  </div>
-                  {item.isNew && (
-                    <Badge className="absolute top-2 right-2 bg-green-500">
-                      New
-                    </Badge>
-                  )}
-                </div>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground">{item.category}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg font-bold text-primary">{item.price}</p>
-                      <div className="flex items-center gap-1">
-                        <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                        <span className="text-sm text-muted-foreground">{item.rating}</span>
-                        <span className="text-xs text-muted-foreground">({item.reviews})</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button size="sm" variant="outline" className="flex-1">
-                      <Eye className="mr-1 h-3 w-3" />
-                      View Details
-                    </Button>
-                    <Button size="sm" className="flex-1">
-                      <ShoppingCart className="mr-1 h-3 w-3" />
-                      Add to Cart
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          
-          <div className="mt-12 text-center">
-            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
-              View Full Portfolio <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </section>
-
+      
       {/* CTA Section */}
       <section className="py-20 bg-primary text-primary-foreground">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
