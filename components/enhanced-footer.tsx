@@ -1,30 +1,29 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Clock, 
-  Facebook, 
-  Twitter, 
-  Instagram, 
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  Facebook,
+  Twitter,
+  Instagram,
   Linkedin,
   Youtube,
-  MessageCircle,
-  ShieldCheck,
-  Star,
-  Award,
-  Users,
   Package,
-  CheckCircle,
+  Users,
+  Heart,
+  MessageCircle,
+  Star,
+  ChevronRight,
   TrendingUp,
   Zap,
   ArrowRight,
-  ChevronRight,
   ExternalLink,
-  Eye,
-  FileText
+  FileText,
+  ShieldCheck,
+  Award
 } from "lucide-react"
 
 export function EnhancedFooter() {
@@ -32,7 +31,6 @@ export function EnhancedFooter() {
 
   const quickLinks = [
     { title: "Services", href: "/services", icon: <Package className="h-4 w-4" /> },
-    { title: "Portfolio", href: "/portfolio", icon: <Eye className="h-4 w-4" /> },
     { title: "About", href: "/about", icon: <Users className="h-4 w-4" /> },
     { title: "Contact", href: "/contact", icon: <MessageCircle className="h-4 w-4" /> },
     { title: "Blog", href: "/blog", icon: <FileText className="h-4 w-4" /> },
