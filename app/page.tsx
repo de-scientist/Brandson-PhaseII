@@ -1,3 +1,5 @@
+"use client"
+
 import { DynamicHero } from "@/components/dynamic-hero"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -133,8 +135,6 @@ const features = [
   }
 ]
 
-
-"use client"
 
 export default function HomePage() {
   const { addToCart, isInCart, getItemQuantity } = useCart()
