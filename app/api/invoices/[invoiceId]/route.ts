@@ -9,9 +9,9 @@ import {
 } from '@/lib/invoices'
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     invoiceId: string
-  }
+  }>
 }
 
 // GET /api/invoices/[invoiceId] - Get specific invoice
@@ -19,8 +19,9 @@ export async function GET(req: Request, { params }: RouteParams) {
   try {
     const { searchParams } = new URL(req.url)
     const format = searchParams.get('format') // 'html', 'pdf', or default JSON
+    const { invoiceId } = await params
     
-    const invoice = await getInvoiceById(params.invoiceId)
+    const invoice = await getInvoiceById(invoiceId)
     
     if (!invoice) {
       return NextResponse.json({
@@ -75,8 +76,10 @@ export async function PUT(req: Request, { params }: RouteParams) {
       }, { status: 400 })
     }
     
+    const { invoiceId } = await params
+    
     // Validate that invoice exists
-    const existingInvoice = await getInvoiceById(params.invoiceId)
+    const existingInvoice = await getInvoiceById(invoiceId)
     if (!existingInvoice) {
       return NextResponse.json({
         success: false,
@@ -85,7 +88,7 @@ export async function PUT(req: Request, { params }: RouteParams) {
     }
     
     // Update invoice status
-    const invoice = await updateInvoiceStatus(params.invoiceId, status)
+    const invoice = await updateInvoiceStatus(invoiceId, status)
     
     if (!invoice) {
       return NextResponse.json({
