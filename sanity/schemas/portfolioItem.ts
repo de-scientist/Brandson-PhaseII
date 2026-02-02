@@ -29,7 +29,6 @@ export const portfolioItem = defineType({
       name: "images",
       type: "array",
       of: [{ type: "image" }],
-      options: { hotspot: true },
     }),
     defineField({ name: "completedAt", type: "datetime" }),
     defineField({ name: "seo", type: "seo" }),

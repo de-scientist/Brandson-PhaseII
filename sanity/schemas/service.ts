@@ -24,7 +24,6 @@ export const service = defineType({
       name: "gallery",
       type: "array",
       of: [{ type: "image" }],
-      options: { hotspot: true },
     }),
     defineField({
       name: "pricingTiers",

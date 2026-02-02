@@ -103,6 +103,7 @@ export async function PUT(req: Request, { params }: RouteParams) {
   try {
     // Get authenticated user
     const user = await getAuthUser(req)
+    const { fileId } = await params
     
     if (!user) {
       return NextResponse.json({
@@ -112,7 +113,7 @@ export async function PUT(req: Request, { params }: RouteParams) {
     }
 
     // Get file
-    const file = await getUploadedFile(params.fileId)
+    const file = await getUploadedFile(fileId)
     
     if (!file) {
       return NextResponse.json({
