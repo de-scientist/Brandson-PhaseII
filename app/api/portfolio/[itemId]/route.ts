@@ -2,18 +2,19 @@ import { NextResponse } from "next/server"
 import { getPortfolioItemById, getRelatedPortfolioItems } from '@/lib/portfolio'
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     itemId: string
-  }
+  }>
 }
 
 // GET /api/portfolio/[itemId] - Get specific portfolio item
 export async function GET(req: Request, { params }: RouteParams) {
   try {
     const { searchParams } = new URL(req.url)
+    const { itemId } = await params
     
     // Get portfolio item
-    const item = await getPortfolioItemById(params.itemId)
+    const item = await getPortfolioItemById(itemId)
     
     if (!item) {
       return NextResponse.json({
@@ -25,7 +26,7 @@ export async function GET(req: Request, { params }: RouteParams) {
     // Check if requesting related items
     if (searchParams.get('related') === 'true') {
       const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : 4
-      const relatedItems = await getRelatedPortfolioItems(params.itemId, limit)
+      const relatedItems = await getRelatedPortfolioItems(itemId, limit)
       
       return NextResponse.json({
         success: true,
