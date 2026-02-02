@@ -241,27 +241,54 @@ export default function HomePage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="group hover:shadow-lg transition-all duration-300 bg-card border-border h-full">
+              <Card key={index} className="group hover:shadow-lg transition-all duration-300 bg-card border-border h-full overflow-hidden">
+                {/* Service Image */}
+                <div className="relative aspect-video overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  {/* Overlay Actions */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => handlePreview(service)}
+                      className="bg-white/90 hover:bg-white text-gray-900"
+                    >
+                      <Eye className="mr-2 h-4 w-4" />
+                      Quick Preview
+                    </Button>
+                  </div>
+                  
+                  {/* Badges */}
+                  <div className="absolute top-2 right-2 flex flex-col gap-2">
+                    {service.isNew && (
+                      <Badge variant="secondary" className="bg-green-500 text-white text-xs">
+                        New
+                      </Badge>
+                    )}
+                    {service.popular && (
+                      <Badge variant="secondary" className="bg-orange-500 text-white text-xs">
+                        Popular
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+                
                 <CardHeader className="pb-4">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-16 h-16 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                      <service.icon className="h-8 w-8 text-primary" />
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors flex-shrink-0">
+                      <service.icon className="h-6 w-6 text-primary" />
                     </div>
-                    <div className="flex flex-col items-end gap-2">
-                      {service.isNew && (
-                        <Badge variant="secondary" className="bg-green-100 text-green-800 text-xs">
-                          New
-                        </Badge>
-                      )}
-                      {service.popular && (
-                        <Badge variant="secondary" className="bg-orange-100 text-orange-800 text-xs">
-                          Popular
-                        </Badge>
-                      )}
+                    <div className="flex-1">
+                      <CardTitle className="text-lg">{service.title}</CardTitle>
+                      <CardDescription className="text-sm">{service.description}</CardDescription>
                     </div>
                   </div>
-                  <CardTitle className="text-xl">{service.title}</CardTitle>
-                  <CardDescription className="text-base">{service.description}</CardDescription>
                 </CardHeader>
                 <CardContent className="pt-0">
                   <div className="space-y-4">
