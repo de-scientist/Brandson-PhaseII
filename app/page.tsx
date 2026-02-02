@@ -306,11 +306,13 @@ export default function HomePage() {
                         <p className="text-lg font-bold text-primary">{service.startingFrom}</p>
                       </div>
                       <div className="flex gap-2">
-                        <Button size="sm" variant="outline" asChild>
-                          <Link href={`/services/${service.title.toLowerCase().replace(/\s+/g, '-')}`}>
-                            <Eye className="mr-1 h-3 w-3" />
-                            View
-                          </Link>
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => handlePreview(service)}
+                        >
+                          <Eye className="mr-1 h-3 w-3" />
+                          Preview
                         </Button>
                         <Button 
                           size="sm" 
@@ -387,6 +389,18 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      
+      {/* Service Preview Modal */}
+      {selectedService && (
+        <ServicePreviewModal
+          service={selectedService}
+          isOpen={isModalOpen}
+          onClose={() => {
+            setIsModalOpen(false)
+            setSelectedService(null)
+          }}
+        />
+      )}
     </div>
   )
 }
