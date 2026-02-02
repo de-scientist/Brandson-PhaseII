@@ -23,7 +23,8 @@ import {
   ExternalLink,
   FileText,
   ShieldCheck,
-  Award
+  Award,
+  Eye
 } from "lucide-react"
 
 export function EnhancedFooter() {
@@ -31,6 +32,7 @@ export function EnhancedFooter() {
 
   const quickLinks = [
     { title: "Services", href: "/services", icon: <Package className="h-4 w-4" /> },
+    { title: "Portfolio", href: "/portfolio", icon: <Eye className="h-4 w-4" /> },
     { title: "About", href: "/about", icon: <Users className="h-4 w-4" /> },
     { title: "Contact", href: "/contact", icon: <MessageCircle className="h-4 w-4" /> },
     { title: "Blog", href: "/blog", icon: <FileText className="h-4 w-4" /> },
