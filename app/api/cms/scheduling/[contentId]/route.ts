@@ -79,9 +79,10 @@ export async function PUT(req: Request, { params }: RouteParams) {
     }
 
     const updates = await req.json()
+    const { contentId } = await params
     
     // Update scheduled content
-    const updatedContent = await updateScheduledContent(params.contentId, updates, user.id)
+    const updatedContent = await updateScheduledContent(contentId, updates, user.id)
     
     if (!updatedContent) {
       return NextResponse.json({
@@ -117,8 +118,10 @@ export async function DELETE(req: Request, { params }: RouteParams) {
       }, { status: 401 })
     }
 
+    const { contentId } = await params
+
     // Delete scheduled content
-    const success = await deleteScheduledContent(params.contentId)
+    const success = await deleteScheduledContent(contentId)
     
     if (!success) {
       return NextResponse.json({
@@ -167,7 +170,7 @@ export async function POST(req: Request, { params }: RouteParams) {
         }, { status: 400 })
       }
 
-      const workflow = await createPublishingWorkflow(params.contentId, steps, user.id)
+      const workflow = await createPublishingWorkflow(contentId, steps, user.id)
       
       return NextResponse.json({
         success: true,
@@ -188,7 +191,7 @@ export async function POST(req: Request, { params }: RouteParams) {
         }, { status: 400 })
       }
 
-      const success = await updateWorkflowStep(params.contentId, stepId, { 
+      const success = await updateWorkflowStep(contentId, stepId, { 
         status, 
         notes, 
         completedBy: user.id 
@@ -208,7 +211,7 @@ export async function POST(req: Request, { params }: RouteParams) {
     }
 
     // Publish content immediately
-    const success = await publishScheduledContent(params.contentId, user.id)
+    const success = await publishScheduledContent(contentId, user.id)
     
     if (!success) {
       return NextResponse.json({
