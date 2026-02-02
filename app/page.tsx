@@ -1,11 +1,13 @@
 "use client"
 
+import { useState } from "react"
 import { DynamicHero } from "@/components/dynamic-hero"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { useCart } from "@/contexts/cart-context"
+import { ServicePreviewModal } from "@/components/service-preview-modal"
 import {
   Package,
   Users,
@@ -62,7 +64,8 @@ const services = [
     description: "Banners, stickers, vehicle branding, and all your printing needs.",
     features: ["High Quality", "Fast Delivery", "Best Prices"],
     startingFrom: "KES 500",
-    popular: true
+    popular: true,
+    image: "/branded-corporate-t-shirts-uniform.jpg"
   },
   {
     id: "branding-services",
@@ -71,7 +74,8 @@ const services = [
     description: "T-shirts, uniforms, caps, and corporate apparel branding.",
     features: ["Custom Designs", "Premium Materials", "Expert Installation"],
     startingFrom: "KES 800",
-    popular: false
+    popular: false,
+    image: "/professional-event-banners-displays.jpg"
   },
   {
     id: "uv-printing",
@@ -81,7 +85,8 @@ const services = [
     features: ["Advanced Technology", "Eco-Friendly", "Long-lasting"],
     startingFrom: "KES 1,200",
     popular: true,
-    isNew: true
+    isNew: true,
+    image: "/uv-printed-promotional-items-bottles.jpg"
   },
   {
     id: "signage-3d-signs",
@@ -90,7 +95,8 @@ const services = [
     description: "Indoor and outdoor signage for businesses and buildings.",
     features: ["3D Design", "LED Options", "Weather Resistant"],
     startingFrom: "KES 2,000",
-    popular: false
+    popular: false,
+    image: "/3d-company-signage-letters.jpg"
   },
   {
     id: "laser-cutting",
@@ -99,7 +105,8 @@ const services = [
     description: "Acrylic, wood cutting, engraving, and custom displays.",
     features: ["Precision Cutting", "Custom Shapes", "Quick Turnaround"],
     startingFrom: "KES 300",
-    popular: false
+    popular: false,
+    image: "/acrylic-menu-holders-displays.jpg"
   },
   {
     id: "paper-printing",
@@ -108,7 +115,8 @@ const services = [
     description: "Business cards, brochures, company profiles, and more.",
     features: ["Premium Paper", "Full Color", "Bulk Discounts"],
     startingFrom: "KES 100",
-    popular: false
+    popular: false,
+    image: "/branded-vehicle-car-wrapping.jpg"
   }
 ]
 
@@ -138,6 +146,8 @@ const features = [
 
 export default function HomePage() {
   const { addToCart, isInCart, getItemQuantity } = useCart()
+  const [selectedService, setSelectedService] = useState<any>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleAddToCart = (service: any) => {
     addToCart({
@@ -151,6 +161,11 @@ export default function HomePage() {
       timeline: 'Standard (3-5 days)',
       image: service.image
     })
+  }
+
+  const handlePreview = (service: any) => {
+    setSelectedService(service)
+    setIsModalOpen(true)
   }
 
   return (
