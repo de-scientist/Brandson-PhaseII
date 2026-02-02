@@ -156,20 +156,20 @@ export async function POST(req: Request, { params }: RouteParams) {
       }, { status: 401 })
     }
 
+    const { contentId } = await params
     const { searchParams } = new URL(req.url)
-    
+    const body = await req.json()
+    const { steps } = body
+      
+    if (!steps || !Array.isArray(steps)) {
+      return NextResponse.json({
+        success: false,
+        error: 'Workflow steps are required',
+      }, { status: 400 })
+    }
+
     // Check if creating workflow
     if (searchParams.get('workflow') === 'true') {
-      const body = await req.json()
-      const { steps } = body
-      
-      if (!steps || !Array.isArray(steps)) {
-        return NextResponse.json({
-          success: false,
-          error: 'Workflow steps are required',
-        }, { status: 400 })
-      }
-
       const workflow = await createPublishingWorkflow(contentId, steps, user.id)
       
       return NextResponse.json({
