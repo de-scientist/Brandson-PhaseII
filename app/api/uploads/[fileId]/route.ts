@@ -4,9 +4,9 @@ import { getAuthUser } from '@/lib/auth'
 import { readFile } from 'fs/promises'
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     fileId: string
-  }
+  }>
 }
 
 // GET /api/uploads/[fileId] - Get file info or download file
@@ -14,9 +14,10 @@ export async function GET(req: Request, { params }: RouteParams) {
   try {
     const { searchParams } = new URL(req.url)
     const download = searchParams.get('download') === 'true'
+    const { fileId } = await params
     
     // Get file info
-    const file = await getUploadedFile(params.fileId)
+    const file = await getUploadedFile(fileId)
     
     if (!file) {
       return NextResponse.json({
@@ -65,6 +66,7 @@ export async function DELETE(req: Request, { params }: RouteParams) {
   try {
     // Get authenticated user
     const user = await getAuthUser(req)
+    const { fileId } = await params
     
     if (!user) {
       return NextResponse.json({
@@ -74,7 +76,7 @@ export async function DELETE(req: Request, { params }: RouteParams) {
     }
 
     // Delete file (user can only delete their own files)
-    const success = await deleteUploadedFile(params.fileId, user.id)
+    const success = await deleteUploadedFile(fileId, user.id)
     
     if (!success) {
       return NextResponse.json({
