@@ -6,9 +6,9 @@ import {
 } from '@/lib/orders'
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     orderId: string
-  }
+  }>
 }
 
 // PUT /api/orders/[orderId]/status - Update order status
@@ -23,8 +23,10 @@ export async function PUT(req: Request, { params }: RouteParams) {
       }, { status: 400 })
     }
     
+    const { orderId } = await params
+    
     // Validate that order exists
-    const existingOrder = await getOrderById(params.orderId)
+    const existingOrder = await getOrderById(orderId)
     if (!existingOrder) {
       return NextResponse.json({
         success: false,
@@ -33,7 +35,7 @@ export async function PUT(req: Request, { params }: RouteParams) {
     }
     
     // Update order status
-    const order = await updateOrderStatus(params.orderId, status)
+    const order = await updateOrderStatus(orderId, status)
     
     if (!order) {
       return NextResponse.json({

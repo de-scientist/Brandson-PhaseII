@@ -9,15 +9,16 @@ import {
 } from '@/lib/orders'
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     orderId: string
-  }
+  }>
 }
 
 // GET /api/orders/[orderId] - Get specific order
 export async function GET(req: Request, { params }: RouteParams) {
   try {
-    const order = await getOrderById(params.orderId)
+    const { orderId } = await params
+    const order = await getOrderById(orderId)
     
     if (!order) {
       return NextResponse.json({
@@ -43,8 +44,9 @@ export async function GET(req: Request, { params }: RouteParams) {
 export async function PUT(req: Request, { params }: RouteParams) {
   try {
     const updates: OrderUpdateInput = await req.json()
+    const { orderId } = await params
     
-    const order = await updateOrder(params.orderId, updates)
+    const order = await updateOrder(orderId, updates)
     
     if (!order) {
       return NextResponse.json({
@@ -69,7 +71,8 @@ export async function PUT(req: Request, { params }: RouteParams) {
 // DELETE /api/orders/[orderId] - Delete/cancel order
 export async function DELETE(req: Request, { params }: RouteParams) {
   try {
-    const success = await deleteOrder(params.orderId)
+    const { orderId } = await params
+    const success = await deleteOrder(orderId)
     
     if (!success) {
       return NextResponse.json({
