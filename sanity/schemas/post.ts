@@ -20,6 +20,6 @@ export const post = defineType({
     defineField({ name: "publishedAt", type: "datetime" }),
     defineField({ name: "seo", type: "seo" }),
   ],
-  orderings: [{ name: "publishedAtDesc", by: [{ field: "publishedAt", direction: "desc" }] }],
+  orderings: [{ title: "Published At Desc", name: "publishedAtDesc", by: [{ field: "publishedAt", direction: "desc" }] }],
 })
 

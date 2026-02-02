@@ -51,6 +51,6 @@ export const video = defineType({
       type: "number",
     }),
   ],
-  orderings: [{ name: "orderAsc", by: [{ field: "order", direction: "asc" }] }],
+  orderings: [{ title: "Order Asc", name: "orderAsc", by: [{ field: "order", direction: "asc" }] }],
 })
 

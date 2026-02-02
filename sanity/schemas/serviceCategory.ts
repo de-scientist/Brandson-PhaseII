@@ -20,6 +20,6 @@ export const serviceCategory = defineType({
     defineField({ name: "order", type: "number" }),
     defineField({ name: "seo", type: "seo" }),
   ],
-  orderings: [{ name: "orderAsc", by: [{ field: "order", direction: "asc" }] }],
+  orderings: [{ title: "Order Asc", name: "orderAsc", by: [{ field: "order", direction: "asc" }] }],
 })
 
