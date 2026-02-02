@@ -2,16 +2,18 @@ import { NextResponse } from "next/server"
 import { getInvoiceById, sendInvoiceEmail } from '@/lib/invoices'
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     invoiceId: string
-  }
+  }>
 }
 
 // POST /api/invoices/[invoiceId]/send - Send invoice via email
 export async function POST(req: Request, { params }: RouteParams) {
   try {
+    const { invoiceId } = await params
+    
     // Get the invoice
-    const invoice = await getInvoiceById(params.invoiceId)
+    const invoice = await getInvoiceById(invoiceId)
     
     if (!invoice) {
       return NextResponse.json({

@@ -11,9 +11,9 @@ import {
 import { getAuthUser } from '@/lib/auth'
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     contentId: string
-  }
+  }>
 }
 
 // GET /api/cms/scheduling/[contentId] - Get specific scheduled content
@@ -29,11 +29,12 @@ export async function GET(req: Request, { params }: RouteParams) {
       }, { status: 401 })
     }
 
+    const { contentId } = await params
     const { searchParams } = new URL(req.url)
     
     // Check if requesting workflows
     if (searchParams.get('workflows') === 'true') {
-      const workflows = await getContentWorkflows(params.contentId)
+      const workflows = await getContentWorkflows(contentId)
       return NextResponse.json({
         success: true,
         data: workflows,
@@ -42,7 +43,7 @@ export async function GET(req: Request, { params }: RouteParams) {
 
     // Get scheduled content
     const content = await getScheduledContent()
-    const contentItem = content.find(c => c.id === params.contentId)
+    const contentItem = content.find(c => c.id === contentId)
     
     if (!contentItem) {
       return NextResponse.json({
