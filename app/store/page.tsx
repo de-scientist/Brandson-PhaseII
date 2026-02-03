@@ -26,7 +26,9 @@ import {
   Eye,
   Plus,
   Minus,
-  X
+  X,
+  CheckCircle,
+  Phone
 } from "lucide-react"
 
 // Mock data - in real app this would come from API
