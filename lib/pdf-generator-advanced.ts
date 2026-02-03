@@ -294,7 +294,13 @@ class AdvancedPDFGenerator {
         orderId: receiptData.orderId,
         customerName: receiptData.customerName,
         customerEmail: receiptData.customerEmail,
-        items: receiptData.items,
+        items: receiptData.items.map(item => ({
+          name: item.name,
+          quantity: item.quantity,
+          price: item.unitPrice
+        })),
+        subtotal: receiptData.subtotal,
+        tax: receiptData.tax,
         total: receiptData.total,
         paymentMethod: receiptData.paymentMethod,
         transactionId: receiptData.transactionId,
@@ -436,7 +442,14 @@ class AdvancedPDFGenerator {
         orderId: orderData.orderId,
         customerName: orderData.customerName,
         customerEmail: orderData.customerEmail,
-        items: orderData.items,
+        items: orderData.items.map(item => ({
+          name: item.name,
+          quantity: item.quantity,
+          price: item.unitPrice
+        })),
+        subtotal: orderData.subtotal,
+        tax: orderData.tax,
+        shipping: orderData.shipping,
         total: orderData.total,
         status: orderData.status,
         orderDate: orderData.orderDate
@@ -455,7 +468,7 @@ class AdvancedPDFGenerator {
     yPosition += 10
 
     // Status Badge
-    const statusColors = {
+    const statusColors: Record<string, [number, number, number]> = {
       quoted: [255, 193, 7],    // yellow
       pending: [108, 117, 125],  // gray
       paid: [40, 167, 69],      // green
@@ -465,7 +478,7 @@ class AdvancedPDFGenerator {
     }
     
     const statusColor = statusColors[orderData.status] || [108, 117, 125]
-    pdf.setFillColor(...statusColor)
+    pdf.setFillColor(statusColor[0], statusColor[1], statusColor[2])
     pdf.rect(pageWidth / 2 - 30, yPosition - 5, 60, 10, 'F')
     pdf.setTextColor(255, 255, 255)
     pdf.text(orderData.status.toUpperCase(), pageWidth / 2, yPosition, { align: 'center' })
