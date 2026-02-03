@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
-import { useCart } from "@/contexts/cart-context"
+import { useEcommerceCart, CustomerInfo, ShippingInfo } from "@/contexts/ecommerce-cart-context"
 import {
   ArrowLeft,
   ArrowRight,
@@ -27,18 +27,26 @@ import {
 } from "lucide-react"
 
 export default function CheckoutPage() {
-  const { cart, clearCart } = useCart()
+  const { cart, clearCart, getShippingOptions, createOrderSummary } = useEcommerceCart()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [selectedPayment, setSelectedPayment] = useState("mpesa")
-  const [customerInfo, setCustomerInfo] = useState({
-    name: "",
+  const [selectedShipping, setSelectedShipping] = useState<ShippingInfo>(getShippingOptions()[0])
+  const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
-    address: "",
-    city: "",
-    notes: ""
+    company: "",
+    address: {
+      street: "",
+      city: "",
+      state: "",
+      postalCode: "",
+      country: "Kenya"
+    }
   })
+  const [orderNotes, setOrderNotes] = useState("")
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setCustomerInfo(prev => ({
