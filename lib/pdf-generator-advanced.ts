@@ -105,6 +105,8 @@ class AdvancedPDFGenerator {
         customerName: quoteData.customerName,
         customerEmail: quoteData.customerEmail,
         items: quoteData.items,
+        subtotal: quoteData.subtotal,
+        tax: quoteData.tax,
         total: quoteData.total,
         quoteDate: quoteData.quoteDate,
         validUntil: quoteData.validUntil
