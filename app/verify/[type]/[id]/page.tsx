@@ -23,7 +23,8 @@ import {
   CreditCard,
   FileText,
   Eye,
-  QrCode
+  QrCode,
+  ShoppingCart
 } from "lucide-react"
 
 export default function VerificationPage() {
