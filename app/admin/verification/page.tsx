@@ -44,7 +44,7 @@ export default function AdminVerificationPage() {
     setIsLoading(true)
     try {
       // Decode QR data
-      const decoded = qrGenerator.decodeQRData(qrData)
+      const decoded = QRCodeGenerator.decodeQRData(qrData)
       
       if (!decoded) {
         setVerificationResult({
