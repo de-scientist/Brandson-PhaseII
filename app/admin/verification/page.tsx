@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
-import { QRCodeGenerator } from "@/lib/qr-generator"
+import { qrGenerator, QRCodeGenerator } from "@/lib/qr-generator"
 import { getQuoteById, mockQuotes } from "@/lib/database/quotes"
 import { getReceiptById, mockReceipts } from "@/lib/database/receipts"
 import {
@@ -44,7 +44,7 @@ export default function AdminVerificationPage() {
     setIsLoading(true)
     try {
       // Decode QR data
-      const decoded = QRCodeGenerator.decodeQRData(qrData)
+      const decoded = qrGenerator.decodeQRData(qrData)
       
       if (!decoded) {
         setVerificationResult({

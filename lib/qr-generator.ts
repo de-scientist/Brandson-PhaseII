@@ -266,4 +266,5 @@ class QRCodeGenerator {
 }
 
 export const qrGenerator = new QRCodeGenerator()
+export { QRCodeGenerator }
 export default QRCodeGenerator
