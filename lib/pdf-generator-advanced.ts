@@ -104,7 +104,11 @@ class AdvancedPDFGenerator {
         quoteId: quoteData.quoteId,
         customerName: quoteData.customerName,
         customerEmail: quoteData.customerEmail,
-        items: quoteData.items,
+        items: quoteData.items.map(item => ({
+          name: item.name,
+          quantity: item.quantity,
+          price: item.unitPrice
+        })),
         subtotal: quoteData.subtotal,
         tax: quoteData.tax,
         total: quoteData.total,
