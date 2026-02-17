@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/HP/Documents/Brandson-media/app/catalogue/layout.tsx"],"sourcesContent":["import type { Metadata } from 'next';\r\n\r\nexport const metadata: Metadata = {\r\n  title: 'Product Catalogue | Brandson Media',\r\n  description: 'Browse our complete catalogue of printing, branding, UV printing, signage, and promotional products. Request quotes for business cards, banners, t-shirts, vehicle wraps, and more.',\r\n  keywords: ['product catalogue', 'printing products', 'branding items', 'promotional merchandise', 'signage products'],\r\n  openGraph: {\r\n    title: 'Brandson Media Product Catalogue',\r\n    description: 'Explore our full range of professional printing and branding solutions',\r\n    type: 'website',\r\n  },\r\n};\r\n\r\nexport default function CatalogueLayout({\r\n  children,\r\n}: {\r\n  children: React.ReactNode;\r\n}) {\r\n  return children;\r\n}\r\n"],"names":[],"mappings":";;;;;;AAEO,MAAM,WAAqB;IAChC,OAAO;IACP,aAAa;IACb,UAAU;QAAC;QAAqB;QAAqB;QAAkB;QAA2B;KAAmB;IACrH,WAAW;QACT,OAAO;QACP,aAAa;QACb,MAAM;IACR;AACF;AAEe,SAAS,gBAAgB,EACtC,QAAQ,EAGT;IACC,OAAO;AACT"}}]
+}
